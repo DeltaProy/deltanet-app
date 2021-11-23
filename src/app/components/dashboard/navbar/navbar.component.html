@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <span>Delta Net</span>
+  <span class="example-spacer"></span>
+  <button mat-button [matMenuTriggerFor]="menu1">Solicitudes</button>
+<mat-menu #menu1="matMenu">
+  <button routerLink="/dashboard" mat-menu-item>Enviadas</button>
+  <button routerLink="/dashboard/solareas" mat-menu-item>Recibidas</button>
+</mat-menu>
+<button routerLink="/dashboard/tareas" mat-button>Tareas Diarias</button>
+<span class="example-spacer"></span>
+<button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
