@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { SolusersComponent } from './solusers/solusers.component'
 import { SolareasComponent } from './solareas/solareas.component';
 import { TareasComponent } from './tareas/tareas.component'
+import { AuthGuard } from '../../usuarios/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, children: [
