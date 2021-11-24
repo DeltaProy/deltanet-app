@@ -14,23 +14,19 @@ export class SolusersComponent implements OnInit {
   public ListSolicitud : Solicitud[];
 
   displayedColumns: string[] = ['id', 'titulo', 'desTitulo', 'createAt','acciones'];
-  //public dataSource: Solicitud[] = [];
-  public dataSource: MatTableDataSource<Solicitud>;
+  dataSource = new MatTableDataSource<any>();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private solicitudService: SolicitudService) { }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   ngOnInit(): void {
-    //this.solicitudService.getSolicitudes().subscribe(solicitudes => this.ListSolicitud = solicitudes);
-    this.solicitudService.getSolicitudes().subscribe(solicitudes => this.dataSource = new MatTableDataSource(solicitudes));
-    //this.dataSource = this.ListSolicitud;
+    this.solicitudService.getSolicitudes().subscribe(solicitudes => {
+      this.dataSource = new MatTableDataSource<any>(solicitudes)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   applyFilter(event: Event) {
