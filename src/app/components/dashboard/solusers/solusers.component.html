@@ -1,6 +1,8 @@
 <div class="container">
   <mat-toolbar>
     <span>Solicitudes Enviadas</span>
+    <div class="example-spacer"></div>
+    <button mat-raised-button color="primary" routerLink="/dashboard/crear-solicitud">Agregar</button>
   </mat-toolbar>
 
   <mat-form-field appearance="standard">
@@ -46,7 +48,7 @@
           <a class="pointer" style="color:#1f516f" matTooltip="Editar solicitud">
             <mat-icon>edit</mat-icon>
           </a>
-          <a class="pointer" style="color:#e15639" matTooltip="Eliminar solicitud">
+          <a class="pointer" (click)="eliminarSolicitud(element)" style="color:#e15639" matTooltip="Eliminar solicitud">
             <mat-icon>delete</mat-icon>
           </a>
         </td>

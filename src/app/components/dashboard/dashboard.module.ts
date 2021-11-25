@@ -8,6 +8,7 @@ import { SolusersComponent } from './solusers/solusers.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { SolareasComponent } from './solareas/solareas.component';
+import { CrearSolicitudComponent } from './solusers/crear-solicitud/crear-solicitud.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SolareasComponent } from './solareas/solareas.component';
     SolusersComponent,
     NavbarComponent,
     TareasComponent,
-    SolareasComponent
+    SolareasComponent,
+    CrearSolicitudComponent
   ],
   imports: [
     CommonModule,
