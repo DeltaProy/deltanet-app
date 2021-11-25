@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../servicios/auth.service';
 //---Entidades
 import { Solicitud } from '../entidades/solicitud';
+import { ListEstado } from '../entidades/estado';
 import { Area } from '../entidades/area';
 
 @Injectable({
@@ -42,6 +43,13 @@ export class SolicitudService {
 
   getAreas(): Observable<Area[]> {
     return this.http.get<Area[]>(this.urlEndPoint + '/areas');
+  }
+
+  getEstado(id:number): Observable<ListEstado>{
+    let idEstado:any = id;
+    let params = new HttpParams();
+    params = params.append("id",idEstado);
+    return this.http.get<ListEstado>(this.urlEndPoint + '/estados',{params:params});
   }
 
   getSolicitudes(): Observable<Solicitud[]>{

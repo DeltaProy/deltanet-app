@@ -4,36 +4,36 @@
   </mat-toolbar>
 
   <mat-card style="margin-top:10px;">
-    <form>
+    <form [formGroup]="form" (ngSubmit)="agregarSolicitud()">
       <mat-grid-list cols="4" rowHeight="70px">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
           <mat-form-field class="ancho">
             <mat-label>Titulo</mat-label>
-            <input matInput autocomplete="off">
+            <input matInput autocomplete="off" formControlName="titulo">
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="4">
+        <mat-grid-tile [colspan]="2" [rowspan]="4">
           IMG
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
           <mat-form-field class="ancho">
             <mat-label>Descripción</mat-label>
-            <input matInput autocomplete="off">
+            <input matInput autocomplete="off" formControlName="destitulo">
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
           <mat-form-field class="ancho">
             <mat-label>Area Administrativa</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let food of foods" [value]="food.value">
-                {{food.viewValue}}
+            <mat-select formControlName="area">
+              <mat-option *ngFor="let area of areas" [value]="area">
+                {{area.descrip}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
           <button mat-raised-button style="margin-right: 20px;">Volver</button>
-          <button mat-raised-button color="primary">Aceptar</button>
+          <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Aceptar</button>
         </mat-grid-tile>
       </mat-grid-list>
     </form>
