@@ -45,7 +45,7 @@
           <a class="pointer" style="color:#1878d0" matTooltip="Ver solicitud">
             <mat-icon>search</mat-icon>
           </a>
-          <a class="pointer" style="color:#1f516f" matTooltip="Editar solicitud">
+          <a class="pointer" style="color:#1f516f" [routerLink]="['/dashboard/crear-solicitud',element.id]" matTooltip="Editar solicitud">
             <mat-icon>edit</mat-icon>
           </a>
           <a class="pointer" (click)="eliminarSolicitud(element)" style="color:#e15639" matTooltip="Eliminar solicitud">

@@ -1,3 +1,19 @@
 .ancho{
   width: 80%;
 }
+
+#uploadFile {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 9;
+    opacity: 0;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+}
+
+.custom-toolbar{
+  font-size: 100%;
+  color: #5b5c60;
+}

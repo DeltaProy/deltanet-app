@@ -52,6 +52,13 @@ export class SolicitudService {
     return this.http.get<ListEstado>(this.urlEndPoint + '/estados',{params:params});
   }
 
+  getArea(id:number): Observable<Area>{
+    let idArea:any = id;
+    let params = new HttpParams();
+    params = params.append("id",idArea);
+    return this.http.get<Area>(this.urlEndPoint + '/conarea',{params:params});
+  }
+
   getSolicitudes(): Observable<Solicitud[]>{
     console.log("Veremos");
     console.log(this.authService.usuario);
@@ -74,6 +81,7 @@ export class SolicitudService {
 
   create(solicitud: Solicitud): Observable<Solicitud>{
     return this.http.post<Solicitud>(this.urlEndPoint, solicitud).pipe(
+      map((response:any) => response.solicitud as Solicitud),
       catchError(e => {
         if(this.isNoAutorizado(e)){
           return throwError(e);

@@ -13,7 +13,8 @@ const routes: Routes = [
     {path: '', component: SolusersComponent},
     {path: 'solareas', component: SolareasComponent},
     {path: 'tareas', component: TareasComponent},
-    {path: 'crear-solicitud', component: CrearSolicitudComponent, canActivate:[AuthGuard]}
+    {path: 'crear-solicitud', component: CrearSolicitudComponent, canActivate:[AuthGuard]},
+    {path: 'crear-solicitud/:id', component: CrearSolicitudComponent, canActivate:[AuthGuard]}
   ]}
 ];
 
