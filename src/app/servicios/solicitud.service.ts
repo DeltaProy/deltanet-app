@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpRequest, HttpEvent, HttpParams } from '@angular/common/http';
-import { map, catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpRequest, HttpEvent, HttpParams } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 //---Servicios
@@ -21,7 +21,7 @@ export class SolicitudService {
     private router: Router,
     private authService: AuthService) { }
 
-  private isNoAutorizado(e):boolean{
+  private isNoAutorizado(e:any):boolean{
     if(e.status == 401){
       /*----------------------------------------------
       Si esta autenticado pero arrojo error 401, indica
@@ -59,11 +59,24 @@ export class SolicitudService {
     return this.http.get<Area>(this.urlEndPoint + '/conarea',{params:params});
   }
 
+  postEnviaCorreo(cuenta:string,subject:string,mensaje:string): Observable<any>{
+    let params = new HttpParams();
+    params = params.append("cuenta",cuenta);
+    params = params.append("subject",subject);
+    params = params.append("mensaje",mensaje);
+    return this.http.get<any>(this.urlEndPoint + '/email',{params:params}).pipe(
+      catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
+        swal('Error al enviar correo',e.error.mensaje,'error');
+        return throwError(e);
+      })
+    );
+  }
+
   getSolicitudes(): Observable<Solicitud[]>{
-    console.log("Veremos");
-    console.log(this.authService.usuario);
     let idUser:any = this.authService.usuario.id;
-    console.log(idUser);
     let params = new HttpParams();
     params = params.append("id",idUser);
     return this.http.get<Solicitud[]>(this.urlEndPoint + '/usuario',{params:params});
@@ -140,7 +153,7 @@ export class SolicitudService {
     );
   }
 
-  subirFoto(archivo: File, id):Observable<HttpEvent<{}>>{
+  subirFoto(archivo: File, id:any):Observable<HttpEvent<{}>>{
     let formData = new FormData();
     formData.append("archivo",archivo);
     formData.append("id",id);
@@ -154,5 +167,11 @@ export class SolicitudService {
         return throwError(e);
       })
     );
+  }
+
+  getimage(archivo:string):Observable<Blob> {
+    console.log('getimage');
+    return this.http
+        .get("http://localhost:8085/apiSolic/uploads/img/" + archivo, {responseType: 'blob'});
   }
 }

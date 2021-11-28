@@ -6,7 +6,7 @@ export class Solicitud {
   titulo:string;
   desTitulo:string;
   createAt:string;
-  imgSol:string;
+  imgsol:string;
   area:Area;
   idcrea:number;
   idasignado:number;
