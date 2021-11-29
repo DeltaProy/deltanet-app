@@ -32,6 +32,7 @@ export class CrearSolicitudComponent implements OnInit {
   emailUser:any;
   imageToShow: any;
   isImageLoading: boolean;
+  flag_act:boolean;
   @ViewChild('fileInput') fileInput: ElementRef;
 
   constructor(private solicitudService: SolicitudService,
@@ -49,22 +50,25 @@ export class CrearSolicitudComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('Al iniciar: ' + this.solicitud.id)
     this.idUser = this.authService.usuario.id;
     this.emailUser = this.authService.usuario.email;
     console.log('ID usuario..: ' + this.idUser);
     this.solicitudService.getAreas().subscribe(areas => this.areas = areas);
     this.solicitudService.getEstado(1).subscribe(estado => this.estado = estado);
+    this.flag_act = false;
     this.cargarSolicitud();
   }
 
   cargarSolicitud():void{
-    console.log('Cargar Solicitud');
     this.activatedRoute.params.subscribe(params => {
       let id = params['id'];
       if(id){
         this.solicitudService.getSolicitud(id)
             .subscribe((solicitud) => {
               this.solicitud = solicitud;
+              console.log('Cargar solicitud: ' + this.solicitud.id);
+              this.flag_act = true;
               this.form.get('titulo').setValue(solicitud.titulo);
               this.form.get('destitulo').setValue(solicitud.desTitulo);
               this.form.get('imagen').setValue('cambiar imagen...');
@@ -92,6 +96,7 @@ export class CrearSolicitudComponent implements OnInit {
 
   agregarSolicitud():void{
     //console.log(this.form);
+    console.log('Agregar solicitud: ' + this.solicitud.id);
     this.idarea = this.form.value.area;
     this.solicitudService.getArea(this.idarea).subscribe((area) => {
       this.area_sel = area;
@@ -101,39 +106,71 @@ export class CrearSolicitudComponent implements OnInit {
       this.solicitud.desTitulo = this.form.value.destitulo;
       this.solicitud.area = this.area_sel;
       this.solicitud.idcrea = this.idUser;
-      this.solicitudService.create(this.solicitud).subscribe(
-        solicitud => {
-          this.router.navigate(['/dashboard']);
-          if (this.form.value.imagen != "archivo..."){
-            this.subirImagen(solicitud.id);
+      console.log('antes de la accion: ' + this.solicitud.id);
+      if(!this.solicitud.id) {
+        this.solicitudService.create(this.solicitud).subscribe(
+          solicitud => {
+            this.router.navigate(['/dashboard']);
+            if (this.form.value.imagen != "archivo..."){
+              this.subirImagen(solicitud.id);
+            }
+            //Envia correo al solicitante
+            this.solicitudService.postEnviaCorreo(this.emailUser,'Notificación de DeltaNet',
+              'Estimado(a) ' + this.authService.usuario.nombre +
+              ' ' + this.authService.usuario.apellido + '\n' +
+              'Has registrado satisfactoriamente el dia de hoy la siguiente solicitud:\n' +
+              'ID: ' + solicitud.id + '\n' +
+              'Titulo: ' + solicitud.titulo + '\n' +
+              'Area: ' + solicitud.area.descrip ).subscribe();
+
+            //Envia correo al jefe o responsable de area requerida
+            this.usuarioService.getUsuario(solicitud.area.iduser).subscribe(data => {
+              this.user_area = data;
+              this.solicitudService.postEnviaCorreo(this.user_area.email,'Notificación de DeltaNet',
+                 'Estimado(a) ' + data.nomper +
+                 ' ' + data.apeper + '\n' +
+                 'Ha sido registrado una solicitud para tu gestión. \n' +
+                 'ID: ' + solicitud.id + '\n' +
+                 'Titulo: ' + solicitud.titulo + '\n' +
+                 'Enviada por: ' + this.authService.usuario.nombre + ' ' + this.authService.usuario.apellido).subscribe();
+            });
+
+            swal('Nueva Solicitud',`Solicitud creada con éxito..!..${solicitud.id}`,'info')
           }
-          //Envia correo al solicitante
-          this.solicitudService.postEnviaCorreo(this.emailUser,'Notificación de DeltaNet',
-            'Estimado(a) ' + this.authService.usuario.nombre +
-            ' ' + this.authService.usuario.apellido + '\n' +
-            'Has registrado satisfactoriamente el dia de hoy la siguiente solicitud:\n' +
-            'ID: ' + solicitud.id + '\n' +
-            'Titulo: ' + solicitud.titulo + '\n' +
-            'Area: ' + solicitud.area.descrip ).subscribe();
+        )
+      }else{
+        this.solicitudService.update(this.solicitud).subscribe(
+          data => {
+            this.router.navigate(['/dashboard']);
+            if (this.form.value.imagen != "cambiar imagen..." &&
+                this.form.value.imagen != "imagen cargada"){
+              this.subirImagen(data.id);
+            }
+            //Envia correo al solicitante
+            this.solicitudService.postEnviaCorreo(this.emailUser,'Notificación de DeltaNet',
+              'Estimado(a) ' + this.authService.usuario.nombre +
+              ' ' + this.authService.usuario.apellido + '\n' +
+              'Has actualizado el dia de hoy la siguiente solicitud:\n' +
+              'ID: ' + data.id + '\n' +
+              'Titulo: ' + data.titulo + '\n' +
+              'Area: ' + data.area.descrip ).subscribe();
 
-          //Envia correo al jefe o responsable de area requerida
-          this.usuarioService.getUsuario(solicitud.area.iduser).subscribe(data => {
-            this.user_area = data;
-            this.solicitudService.postEnviaCorreo(this.user_area.email,'Notificación de DeltaNet',
-               'Estimado(a) ' + data.nomper +
-               ' ' + data.apeper + '\n' +
-               'Ha sido registrado una solicitud para tu gestión. \n' +
-               'ID: ' + solicitud.id + '\n' +
-               'Titulo: ' + solicitud.titulo + '\n' +
-               'Enviada por: ' + this.authService.usuario.nombre + ' ' + this.authService.usuario.apellido).subscribe();
-          });
-
-          swal('Nueva Solicitud',`Solicitud creada con éxito..!..${solicitud.id}`,'info')
-        }
-      );
+              //Envia correo al jefe o responsable de area requerida
+              this.usuarioService.getUsuario(data.area.iduser).subscribe(datauser => {
+                this.user_area = datauser;
+                this.solicitudService.postEnviaCorreo(this.user_area.email,'Notificación de DeltaNet',
+                   'Estimado(a) ' + datauser.nomper +
+                   ' ' + datauser.apeper + '\n' +
+                   'Ha sido actualizado la solicitud para tu gestión. \n' +
+                   'ID: ' + data.id + '\n' +
+                   'Titulo: ' + data.titulo + '\n' +
+                   'Enviada por: ' + this.authService.usuario.nombre + ' ' + this.authService.usuario.apellido).subscribe();
+              });
+              swal('Actualización Solicitud',`Solicitud actualizada con éxito..!..${data.id}`,'info')
+          }
+        );
+      }
     });
-
-
   }
 
   uploadFileEvt(imgFile: any) {
@@ -153,6 +190,7 @@ export class CrearSolicitudComponent implements OnInit {
         image.src = e.target.result;
         image.onload = rs => {
           let imgBase64Path = e.target.result;
+          console.log(rs);
           this.dataimage = imgBase64Path;
         };
       };
@@ -186,15 +224,18 @@ export class CrearSolicitudComponent implements OnInit {
   }
 
   getImageFromService(file_imagen:string){
-    console.log('archivo: ' + file_imagen);
-    this.isImageLoading = true;
-    this.solicitudService.getimage(file_imagen)
-       .subscribe(data => {
-         this.createImageFromBlob(data);
-         this.isImageLoading = false;
-       },error => {
-         this.isImageLoading = false;
-       })
+    if(file_imagen != null){
+      this.form.get('imagen').setValue('imagen cargada');
+      this.isImageLoading = true;
+      this.solicitudService.getimage(file_imagen)
+         .subscribe(data => {
+           this.createImageFromBlob(data);
+           this.isImageLoading = false;
+         },error => {
+           this.isImageLoading = false;
+           console.log(error)
+         })
+    }
   }
 
 }

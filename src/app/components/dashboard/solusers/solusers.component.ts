@@ -61,6 +61,7 @@ export class SolusersComponent implements OnInit {
         this.solicitudService.delete(solicitud.id).subscribe(
           response => {
             this.cargarData();
+            console.log(response.id);
             //this.clientes = this.clientes.filter(cli => cli != cliente)
             swal(
               'Solicitud Eliminada!',

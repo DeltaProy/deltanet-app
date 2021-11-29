@@ -42,9 +42,9 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element" style="text-align: right;">
-          <a class="pointer" style="color:#1878d0" matTooltip="Ver solicitud">
+          <!--<a class="pointer" style="color:#1878d0" matTooltip="Ver solicitud">
             <mat-icon>search</mat-icon>
-          </a>
+          </a>-->
           <a class="pointer" style="color:#1f516f" [routerLink]="['/dashboard/crear-solicitud',element.id]" matTooltip="Editar solicitud">
             <mat-icon>edit</mat-icon>
           </a>
