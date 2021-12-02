@@ -22,6 +22,7 @@ export class CrearSolicitudComponent implements OnInit {
   estado: ListEstado;
   area_sel: Area;
   user_area: Usuario;
+  user_crea: Usuario;
   form: FormGroup;
   fileAttr = 'cambia File';
   private fileImagen:File;
@@ -56,6 +57,7 @@ export class CrearSolicitudComponent implements OnInit {
     console.log('ID usuario..: ' + this.idUser);
     this.solicitudService.getAreas().subscribe(areas => this.areas = areas);
     this.solicitudService.getEstado(1).subscribe(estado => this.estado = estado);
+    this.usuarioService.getUsuario(this.idUser).subscribe(datauser => this.user_crea = datauser);
     this.flag_act = false;
     this.cargarSolicitud();
   }
@@ -105,7 +107,7 @@ export class CrearSolicitudComponent implements OnInit {
       this.solicitud.titulo = this.form.value.titulo;
       this.solicitud.desTitulo = this.form.value.destitulo;
       this.solicitud.area = this.area_sel;
-      this.solicitud.idcrea = this.idUser;
+      this.solicitud.creado = this.user_crea;
       console.log('antes de la accion: ' + this.solicitud.id);
       if(!this.solicitud.id) {
         this.solicitudService.create(this.solicitud).subscribe(

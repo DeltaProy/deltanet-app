@@ -17,4 +17,10 @@ export class UsuarioService {
     params = params.append("id",id);
     return this.http.get<Usuario>(this.urlEndPoint + '/buscaid',{params:params});
   }
+
+  getUsuariosPorRol(rol:string): Observable<Usuario[]>{
+    let params = new HttpParams();
+    params = params.append("rol",rol);
+    return this.http.get<Usuario[]>(this.urlEndPoint + '/listaPorRoles',{params:params});  
+  }
 }

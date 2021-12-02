@@ -1,0 +1,40 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 25%;
+}
+
+.campoId{
+  width: 10%;
+  font-size: 11px;
+}
+
+.campoTitulo{
+  width: 50%;
+  font-size: 11px;
+}
+
+.campoCreado{
+  width: 20%;
+  font-size: 11px;
+}
+
+table {
+  width: 100%;
+  margin-top: 10px;
+}
+ th{
+   width: 20%;
+ }
+
+.division_test{
+  width: 100%;
+}
+
+.pointer{
+  cursor: pointer;
+}

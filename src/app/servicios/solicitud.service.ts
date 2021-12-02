@@ -75,6 +75,13 @@ export class SolicitudService {
     );
   }
 
+  getSolicRecibidas(): Observable<Solicitud[]>{
+    let idUser:any = this.authService.usuario.id;
+    let params = new HttpParams();
+    params = params.append("id",idUser);
+    return this.http.get<Solicitud[]>(this.urlEndPoint + '/userarea',{params:params});
+  }
+
   getSolicitudes(): Observable<Solicitud[]>{
     let idUser:any = this.authService.usuario.id;
     let params = new HttpParams();

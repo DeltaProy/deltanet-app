@@ -7,6 +7,7 @@ import { TareasComponent } from './tareas/tareas.component'
 import { AuthGuard } from '../../usuarios/guards/auth.guard';
 //import { RoleGuard } from '../../usuarios/guards/role.guard';
 import { CrearSolicitudComponent } from './solusers/crear-solicitud/crear-solicitud.component'
+import { AsignarSolicitudComponent } from './solareas/asignar-solicitud/asignar-solicitud.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, children: [
@@ -14,7 +15,8 @@ const routes: Routes = [
     {path: 'solareas', component: SolareasComponent},
     {path: 'tareas', component: TareasComponent},
     {path: 'crear-solicitud', component: CrearSolicitudComponent, canActivate:[AuthGuard]},
-    {path: 'crear-solicitud/:id', component: CrearSolicitudComponent, canActivate:[AuthGuard]}
+    {path: 'crear-solicitud/:id', component: CrearSolicitudComponent, canActivate:[AuthGuard]},
+    {path: 'asignar-solicitud/:id',component:AsignarSolicitudComponent}
   ]}
 ];
 

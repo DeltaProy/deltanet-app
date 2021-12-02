@@ -9,6 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { SolareasComponent } from './solareas/solareas.component';
 import { CrearSolicitudComponent } from './solusers/crear-solicitud/crear-solicitud.component';
+import { AsignarSolicitudComponent } from './solareas/asignar-solicitud/asignar-solicitud.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { CrearSolicitudComponent } from './solusers/crear-solicitud/crear-solici
     NavbarComponent,
     TareasComponent,
     SolareasComponent,
-    CrearSolicitudComponent
+    CrearSolicitudComponent,
+    AsignarSolicitudComponent
   ],
   imports: [
     CommonModule,

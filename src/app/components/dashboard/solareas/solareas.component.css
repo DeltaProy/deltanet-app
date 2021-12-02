@@ -1,1 +1,44 @@
+table {
+  width: 100%;
+  margin-top: 10px;
+}
+ th{
+   width: 20%;
+ }
 
+.pointer{
+  cursor: pointer;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-column-id{
+  width: 8%;
+}
+
+.mat-column-titulo{
+  width: 12%;
+}
+
+.mat-column-desTitulo{
+  width: 30%;
+}
+
+.mat-column.estadoSolicDescrip{
+  width: 10%;
+}
+
+.mat-column-createAt{
+  width: 10%;
+}
+
+.mat-column-creadoUsername{
+  width: 10%;
+}
+
+.mat-column-acciones {
+  width: 10%;
+}

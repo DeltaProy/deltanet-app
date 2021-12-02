@@ -1,4 +1,5 @@
 import { Area } from './area';
+import { Usuario } from './usuario';
 import { ListEstado } from './estado';
 
 export class Solicitud {
@@ -8,7 +9,7 @@ export class Solicitud {
   createAt:string;
   imgsol:string;
   area:Area;
-  idcrea:number;
-  idasignado:number;
+  creado:Usuario;
+  asignado:Usuario;
   estadoSolic: ListEstado;
 }
