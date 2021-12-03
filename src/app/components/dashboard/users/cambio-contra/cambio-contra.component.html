@@ -1,0 +1,28 @@
+<div class="container">
+    <mat-toolbar>
+        <span>Cambiar Contraseña</span>
+    </mat-toolbar>
+
+    <mat-card style="margin-top:10px;">
+        <form [formGroup]="form" (ngSubmit)="test()">
+            <mat-grid-list cols="4" rowHeight="70px">
+                <mat-grid-tile [colspan]="4" [rowspan]="1" *ngIf="!isAdmin">
+                    <mat-form-field class="ancho">
+                        <mat-label>Contraseña Antigua</mat-label>
+                        <input matInput autocomplete="off" formControlName="lastPass">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="4" [rowspan]="1">
+                    <mat-form-field class="ancho">
+                        <mat-label>Contraseña Nueva</mat-label>
+                        <input matInput autocomplete="off" formControlName="newPass">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="4" [rowspan]="1">
+                    <button mat-raised-button type="button" style="margin-right: 20px;" (click)="volver()">Volver</button>
+                    <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Cambiar</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </form>
+    </mat-card>
+</div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Usuario } from '../entidades/usuario'
+import { Role } from '../entidades/role';
 
 @Injectable({
   providedIn: 'root'
@@ -87,7 +88,7 @@ export class AuthService {
   }
 
   hasRole(role:string):boolean {
-    if(this.usuario.roles.includes(role)){
+    if(this.usuario.roles.toString().includes(role)){
       return true;
     }
     return false;

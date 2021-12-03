@@ -1,3 +1,5 @@
+import { Role } from "./role";
+
 export class Usuario {
   id: number;
   username: string;
@@ -5,7 +7,9 @@ export class Usuario {
   nombre: string;
   apellido: string;
   email: string;
-  roles: string[] = [];
+  roles: Role[] = [];
   nomper: string;
   apeper: string;
+  nrodoc: number;
+  enabled: boolean;
 }

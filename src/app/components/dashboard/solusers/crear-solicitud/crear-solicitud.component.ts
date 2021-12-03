@@ -114,6 +114,7 @@ export class CrearSolicitudComponent implements OnInit {
             if (this.form.value.imagen != "archivo..."){
               this.subirImagen(solicitud.id);
             }
+            console.log(solicitud)
             //Envia correo al solicitante
             this.solicitudService.postEnviaCorreo(this.emailUser,'Notificación de DeltaNet',
               'Estimado(a) ' + this.authService.usuario.nombre +

@@ -9,6 +9,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { SolareasComponent } from './solareas/solareas.component';
 import { CrearSolicitudComponent } from './solusers/crear-solicitud/crear-solicitud.component';
+import { UsersComponent } from './users/users.component';
+import { CrearUsuarioComponent } from './users/crear-usuario/crear-usuario.component';
+import { CambioContraComponent } from './users/cambio-contra/cambio-contra.component';
 
 
 @NgModule({
@@ -18,7 +21,10 @@ import { CrearSolicitudComponent } from './solusers/crear-solicitud/crear-solici
     NavbarComponent,
     TareasComponent,
     SolareasComponent,
-    CrearSolicitudComponent
+    CrearSolicitudComponent,
+    UsersComponent,
+    CrearUsuarioComponent,
+    CambioContraComponent
   ],
   imports: [
     CommonModule,
